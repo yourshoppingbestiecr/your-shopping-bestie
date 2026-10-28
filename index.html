@@ -13,8 +13,8 @@
 <script>
 const $=id=>document.getElementById(id);const n=id=>Math.max(0,Number($(id).value)||0);const usd=v=>'$'+v.toFixed(2);const crc=v=>'₡'+Math.round(v).toLocaleString('es-CR');let last={};
 // Valores provisionales para estimación; no son tasas verificadas ni cotización definitiva.
-const ASSUMED_US_TAX=.07,ASSUMED_BAG=4,ASSUMED_FX=510;
-function commission(p){if(p<=0)return 0;if(p<=25)return 7;if(p<=50)return 10;if(p<=100)return p*.20;if(p<=200)return p*.18;if(p<=400)return p*.15;return Math.max(p*.12,60)}
+const ASSUMED_US_TAX=.07,ASSUMED_BAG=0,ASSUMED_FX=510;
+function commission(p){if(p<=0)return 0;if(p<=25)return 5;if(p<=50)return 7;if(p<=100)return p*.15;if(p<=200)return p*.12;if(p<=400)return p*.10;return Math.max(p*.08,35)}
 function calc(){const p=n('price'),fee=commission(p),tax=p*ASSUMED_US_TAX,bag=p>0?ASSUMED_BAG:0,total=p+fee+tax+bag,type=$('type').selectedOptions[0].text,special=$('type').value!=='normal';last={p,fee,tax,bag,total,fx:ASSUMED_FX,type,special};$('usd').textContent=usd(total);$('crc').textContent=crc(total*ASSUMED_FX);$('special').hidden=!special;}
 ['price','type'].forEach(id=>$(id).addEventListener('input',calc));calc();
 function wa(message){window.open('https://wa.me/50686918253?text='+encodeURIComponent(message),'_blank','noopener,noreferrer')}
